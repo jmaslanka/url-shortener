@@ -76,11 +76,9 @@ WSGI_APPLICATION = 'griv.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'griv',
-        'HOST': 'localhost',
-        'PORT': '',
-        'USER': 'root',
-        'PASSWORD': 'qwerty123'
+        'OPTIONS': {
+            'read_default_file': '/etc/mysql/my.cnf'
+        }
     }
 }
 
