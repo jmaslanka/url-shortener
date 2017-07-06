@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import GrivURL
+from shortener.models import GrivURL
 
 
 admin.site.register(GrivURL)
