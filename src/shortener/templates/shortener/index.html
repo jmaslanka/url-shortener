@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Griv. Shorten your URL.</title>
+</head>
+<body>
+    <div style="width: 900px; margin: 0 auto">
+        <h1>Hi there!</h1>
+        <form method="POST" action=".">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Shorten">
+        </form>
+    </div>
+</body>
+</html>
