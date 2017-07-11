@@ -5,6 +5,9 @@ from shortener.models import GrivURL
 
 
 class Command(BaseCommand):
+    """
+    Command used to delete active/inactive records of URLs.
+    """
     help = 'Deletes inactive shortcodes'
 
     def add_arguments(self, parser):
@@ -18,7 +21,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         if options['full']:
-            qs = GrivURL.objects.filter(id__gte=1)
+            qs = GrivURL.objects.all()
             quantity = len(qs)
             result = input(
                 'You are about to delete all {} shortcodes. '
@@ -26,7 +29,7 @@ class Command(BaseCommand):
             )
             if result.lower() == 'yes':
                 qs.delete()
-                if not GrivURL.objects.filter(id__gte=1).exists():
+                if not GrivURL.objects.all().exists():
                     self.stdout.write(self.style.SUCCESS(
                         'Successfully deleted {} records.'.format(quantity)
                     ))

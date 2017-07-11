@@ -3,6 +3,9 @@ from django.utils.deprecation import MiddlewareMixin
 
 
 class NoWWWRedirectMiddleware(MiddlewareMixin):
+    """
+    Removes www from URL.
+    """
     def process_request(self, request):
         if request.method == 'GET':
             host = request.get_host()

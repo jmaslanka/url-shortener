@@ -1,16 +1,24 @@
+from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponseRedirect
 from django.shortcuts import (
-    get_object_or_404,
     render,
+    redirect
 )
 from django.views import View
-from django.contrib.sites.shortcuts import get_current_site
+from ipware.ip import get_real_ip
+
 
 from shortener.forms import SubmitUrlForm
-from shortener.models import GrivURL
+from shortener.models import (
+    GrivURL,
+    ClickSpy
+)
 
 
 class HomeView(View):
+    """
+    View of home page with form to pass URL.
+    """
     form_class = SubmitUrlForm
     template = 'shortener/index.html'
     success_template = 'shortener/success.html'
@@ -33,7 +41,17 @@ class HomeView(View):
 
 
 class RedirectView(View):
+    """
+    View to redirect from given shortcut.
+    """
     def get(self, request, shortcode=None, *args, **kwargs):
-        obj = get_object_or_404(GrivURL, shortcode=shortcode)  # TODO 404 page
-        # TODO counting and time updating
+        obj = GrivURL.objects.filter(shortcode=shortcode, active=True)
+        if len(obj) is not 1:
+            return redirect('home')
+        obj.register_click()
+        if obj.inspection:
+            ClickSpy.objects.create(
+                ip_address=get_real_ip(request),
+                url_address=obj
+            )
         return HttpResponseRedirect(obj.url)
