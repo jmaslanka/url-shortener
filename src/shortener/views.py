@@ -48,10 +48,10 @@ class RedirectView(View):
         obj = GrivURL.objects.filter(shortcode=shortcode, active=True)
         if len(obj) is not 1:
             return redirect('home')
-        obj.register_click()
-        if obj.inspection:
+        obj[0].register_click()
+        if obj[0].inspection:
             ClickSpy.objects.create(
                 ip_address=get_real_ip(request),
-                url_address=obj
+                url_address=obj[0]
             )
-        return HttpResponseRedirect(obj.url)
+        return HttpResponseRedirect(obj[0].url)

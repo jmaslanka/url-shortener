@@ -1,15 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Griv. Shorten your URL.</title>
-</head>
-<body>
-    <div style="width: 900px; margin: 0 auto">
-        <h1>Hi there!</h1>
-        <p>Your short url is ready.</p>
-        <p>{{ origin }}</p>
-        <a href="http://{{ url }}">{{ url }}</a>
-    </div>
-</body>
-</html>
+{% extends "shortener/base.html" %}
+
+{% block content %}
+<h1 class="cover-heading">Your link is ready!</h1>
+<div class="col-sm-6 col-sm-offset-3">
+  <p>{{ origin }}</p>
+  <a href="http://{{ url }}" id="link">{{ url }}</a>
+  <button type="button" onclick="copy('link')" class="btn btn-success">Copy</button>
+</div>
+{% endblock content %}

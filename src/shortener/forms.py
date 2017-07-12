@@ -6,7 +6,16 @@ class SubmitUrlForm(forms.Form):
     """
     Form used to submit URL to shorten.
     """
-    url = forms.CharField(max_length=254, label='Submit URL')
+    url = forms.CharField(
+        max_length=254,
+        label='',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Paste a link to shorten it',
+                'class': 'form-control'
+            }
+        )
+    )
 
     def clean_url(self):
         """
