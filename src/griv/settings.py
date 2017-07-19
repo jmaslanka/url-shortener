@@ -24,8 +24,7 @@ SECRET_KEY = 'k)th8pt$8_x*0ciy7rj92_g1p$)qpa*eq-88b0i$4=fis3=p0z'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['www.griv.com', 'griv.com', '127.0.0.1']
 
 
 # Application definition
@@ -37,9 +36,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # custom
+    'shortener',
 ]
 
 MIDDLEWARE = [
+    'griv.middleware.NoWWWRedirectMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -76,11 +79,9 @@ WSGI_APPLICATION = 'griv.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'griv',
-        'HOST': 'localhost',
-        'PORT': '',
-        'USER': 'root',
-        'PASSWORD': 'qwerty123'
+        'OPTIONS': {
+            'read_default_file': '/etc/mysql/my.cnf'
+        }
     }
 }
 
@@ -109,7 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Warsaw'
 
 USE_I18N = True
 
