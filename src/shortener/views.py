@@ -47,7 +47,7 @@ class RedirectView(View):
     def get(self, request, shortcode=None, *args, **kwargs):
         obj = GrivURL.objects.filter(shortcode=shortcode, active=True)
         if len(obj) is not 1:
-            return redirect('home')
+            return redirect('shortener:home')
         obj[0].register_click()
         if obj[0].inspection:
             ClickSpy.objects.create(
