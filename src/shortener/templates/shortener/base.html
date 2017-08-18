@@ -21,6 +21,9 @@
           </div>
           <div class="navbar-header pull-right">
             {% if user.is_authenticated %}
+              <a href="{% url 'shortener:account' %}">
+                <button type="button" class="btn btn-default navbar-btn">My account</button>
+              </a>
               <a href="{% url 'shortener:logout' %}">
                 <button type="button" class="btn btn-default navbar-btn">Log out</button>
               </a>

@@ -34,7 +34,21 @@ class HomeView(View):
         form = self.form_class(request.POST)
         if form.is_valid():
             origin = form.cleaned_data.get('url')
-            obj, _ = GrivURL.objects.get_or_create(url=origin)
+            is_logged = request.user.is_authenticated()
+            if is_logged:
+                qs = GrivURL.objects.filter(url=origin, owner=request.user)
+                if qs.exists():
+                    obj = qs[0]
+                else:
+                    obj = GrivURL.objects.create(url=origin)
+                    obj.owner = request.user
+                    obj.save()
+            else:
+                qs = GrivURL.objects.filter(url=origin, owner=None)
+                if qs.exists():
+                    obj = qs[0]
+                else:
+                    obj = GrivURL.objects.create(url=origin)
             url = '{}/{}'.format(get_current_site(request), obj.shortcode)
             return render(
                 request, self.success_template,
@@ -64,6 +78,13 @@ class RegisterView(View):
             login(request, user)
             return redirect('shortener:home')
         return render(request, self.template, {'form': form})
+
+
+class AccountView(View):
+    """
+    View to manage account and created links.
+    """
+    template = 'shortener/account.html'
 
 
 class RedirectView(View):

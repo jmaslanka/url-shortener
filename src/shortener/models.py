@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 
@@ -13,9 +14,10 @@ class GrivURL(models.Model):
     shortcode = models.CharField(max_length=16, unique=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     last_clicked = models.DateTimeField(null=True, blank=True)
-    quantity = models.IntegerField(default=0)
+    clicks = models.IntegerField(default=0)
     active = models.BooleanField(default=True)
     inspection = models.BooleanField(default=False)
+    owner = models.ForeignKey(User, null=True, blank=True)
 
     objects = GrivURLManager()
 
@@ -34,7 +36,7 @@ class GrivURL(models.Model):
         super(GrivURL, self).save(*args, **kwargs)
 
     def register_click(self):
-        self.quantity += 1
+        self.clicks += 1
         self.last_clicked = timezone.now()
         self.save()
 

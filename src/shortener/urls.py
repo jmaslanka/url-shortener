@@ -1,5 +1,6 @@
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 
 from shortener import views
@@ -12,6 +13,11 @@ urlpatterns = [
         name='shortcode'
     ),
     url(r'^$', views.HomeView.as_view(), name='home'),
+    url(
+        r'^account/$',
+        login_required(views.AccountView.as_view()),
+        name='account'
+    ),
     url(
         r'^login/$',
         auth_views.LoginView.as_view(

@@ -16,10 +16,10 @@ class UrlMethodTest(TestCase):
         self.url.save()
         self.assertNotEqual(self.url.shortcode, '')
         self.url.register_click()
-        clicks = self.url.quantity
+        clicks = self.url.clicks
         time = self.url.last_clicked
         self.url.register_click()
-        self.assertEqual(self.url.quantity, clicks + 1)
+        self.assertEqual(self.url.clicks, clicks + 1)
         self.assertGreater(self.url.last_clicked, time)
 
 
