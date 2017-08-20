@@ -1,5 +1,6 @@
 from django.contrib.auth import login, authenticate
 from django.contrib.sites.shortcuts import get_current_site
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponseRedirect
 from django.shortcuts import (
     render,
@@ -86,11 +87,33 @@ class AccountView(View):
     """
     template = 'shortener/account.html'
 
+    def get(self, request, *args, **kwargs):
+        url_list = request.user.grivurl_set.all()
+        paginator = Paginator(url_list, 6)
+
+        page = request.GET.get('page')
+        try:
+            links = paginator.page(page)
+        except PageNotAnInteger:
+            links = paginator.page(1)
+        except EmptyPage:
+            links = paginator.page(paginator.num_pages)
+
+        return render(
+            request, self.template,
+            {
+                'links': links,
+                'site': get_current_site(request),
+                'number_of_links': len(url_list)
+            }
+        )
+
 
 class RedirectView(View):
     """
     View to redirect from given shortcut.
     """
+
     def get(self, request, shortcode=None, *args, **kwargs):
         obj = GrivURL.objects.filter(shortcode=shortcode, active=True)
         if len(obj) is not 1:

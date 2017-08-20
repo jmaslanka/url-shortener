@@ -1,0 +1,64 @@
+{% extends "shortener/base.html" %}
+
+{% block content %}
+<div class="col-sm-8 col-sm-offset-2">
+  <h1>Account</h1>
+  <div>
+    <p>Username: {{ request.user.username }}</p>
+    <p>You joined: {{ request.user.date_joined }}</p>
+    <p>You've created {{ number_of_links }} links so far.</p>
+  </div>
+  <div>
+    <a href="{% url 'shortener:password_change' %}">
+      <button type="button" class="btn btn-default">Change password</button>
+    </a>
+    <a href="#"> <!-- Change when implemented -->
+      <button type="button" class="btn btn-danger">Delete account</button>
+    </a>
+  </div>
+
+  {% if links %}
+    <h1>Your links</h1>
+    <table class="table background table-bordered">
+      <tr>
+        <th>#</th>
+        <th>Link</th>
+        <th>URL</th>
+        <th>Copy</th>
+        <th>Created</th>
+        <th>Clicks</th>
+        <th>Last clicked</th>
+      </tr>
+      {% for url in links %}
+        <tr>
+          <th>{{ forloop.counter0|add:links.start_index }}</th>
+          <th>{{ url.url }}</th>
+          <th id="link{{ forloop.counter }}">
+            <a href="http://{{ site }}/{{ url.shortcode }}">{{ site }}/{{ url.shortcode }}</a>
+          </th>
+          <th>
+            <button type="button" onclick="copy('link{{ forloop.counter }}')"
+                    class="btn btn-success">Copy</button>
+          </th>
+          <th>{{ url.created|date:"d.m.Y" }}</th>
+          <th>{{ url.clicks }}</th>
+          <th>{{ url.last_clicked|date:"d.m.Y G:i" }}</th>
+        </tr>
+      {% endfor %}
+    </table>
+    <div class="pagination">
+      <span class="step-links">
+        {% if links.has_previous %}
+          <a href="?page={{ links.previous_page_number }}">Previous</a>
+        {% endif %}
+        <span class="current">
+          Page {{ links.number }} of {{ links.paginator.num_pages }}.
+        </span>
+        {% if links.has_next %}
+          <a href="?page={{ links.next_page_number }}">Next</a>
+        {% endif %}
+      </span>
+    </div>
+  {% endif %}
+</div>
+{% endblock content %}

@@ -21,6 +21,11 @@
           </div>
           <div class="navbar-header pull-right">
             {% if user.is_authenticated %}
+              {% if request.user.is_staff %}
+                <a href="{% url 'admin:index' %}">
+                  <button type="button" class="btn btn-default navbar-btn">Admin Panel</button>
+                </a>
+              {% endif %}
               <a href="{% url 'shortener:account' %}">
                 <button type="button" class="btn btn-default navbar-btn">My account</button>
               </a>

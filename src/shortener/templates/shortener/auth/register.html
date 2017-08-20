@@ -4,13 +4,13 @@
 <div class="col-sm-6 col-sm-offset-3">
   {% if user.is_authenticated %}
     <div class="col-sm-8 col-sm-offset-2">
-      <h1 class="cover-heading">You can log in now!</h1>
+      <h1>You can log in now!</h1>
       <a href="{% url 'shortener:login' %}" class="col-sm-8 col-sm-offset-2">
         <button type="button" class="btn btn-primary">Log in</button>
       </a>
     </div>
   {% else %}
-    <h1 class="cover-heading">Register</h1>
+    <h1>Register</h1>
     <form method="POST">
       {% csrf_token %}
       <div class="label-inline">

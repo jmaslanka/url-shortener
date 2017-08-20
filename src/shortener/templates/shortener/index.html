@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="col-sm-6 col-sm-offset-3">
-  <h1 class="cover-heading">Shorten your URL!</h1>
+  <h1>Shorten your URL!</h1>
   <form method="POST" action=".">
     {% csrf_token %}
     {{ form.as_p }}

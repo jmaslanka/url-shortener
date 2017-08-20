@@ -6,9 +6,22 @@ body {
   background-image: url(http://www.mrwallpaper.com/wallpapers/mountains-scenery-1920x1200.jpg);
 }
 
-a, p {
+p {
   color: black;
   font-size: 18px;
+  font-weight: bold;
+}
+
+a {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+th a {
+  font-size: 15px;
+}
+
+h1, h2, h3, h4, h5 {
   font-weight: bold;
 }
 
@@ -26,4 +39,20 @@ a, p {
 .label-inline label {
   display: inline-block;
   width: 140px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+table.background {
+  background-color: white;
+}
+
+.pagination {
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.right {
+  float: right;
 }
