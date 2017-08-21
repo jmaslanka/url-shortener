@@ -108,6 +108,17 @@ class AccountView(View):
             }
         )
 
+    def post(self, request, *args, **kwargs):
+        try:
+            confirmation = request.POST['confirmation']
+        except KeyError:
+            return redirect('shortener:account')
+        if confirmation.lower() == 'delete':
+            if 'links' in request.POST:
+                request.user.grivurl_set.all().delete()
+            request.user.delete()
+        return redirect('shortener:account')
+
 
 class RedirectView(View):
     """

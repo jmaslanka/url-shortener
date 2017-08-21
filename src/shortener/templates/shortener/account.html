@@ -12,9 +12,66 @@
     <a href="{% url 'shortener:password_change' %}">
       <button type="button" class="btn btn-default">Change password</button>
     </a>
-    <a href="#"> <!-- Change when implemented -->
-      <button type="button" class="btn btn-danger">Delete account</button>
-    </a>
+    <form method="POST" class="right pull-left" style="margin-right: 20px">
+      {% csrf_token %}
+      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmModal">Delete account</button>
+
+      <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Delete account.</h4>
+            </div>
+            <div class="modal-body">
+              <h3>Are you sure you want to delete your account?</h3>
+              <p>Type <i>delete</i>:<input type="text" name="confirmation" style="margin-left: 10px"></p>
+              <p><input type="checkbox" name="links"> Delete all links as well</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-danger">TERMINATE</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   </div>
 
   {% if links %}
@@ -62,3 +119,11 @@
   {% endif %}
 </div>
 {% endblock content %}
+
+{% load static %}
+{% block scripts %}
+  <script src="{% static 'js/griv.js' %}"></script>
+  <script src="{% static 'js/modal.js' %}"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+{% endblock scripts %}
